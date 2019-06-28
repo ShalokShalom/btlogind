@@ -1,0 +1,24 @@
+#!/usr/bin/python
+
+import RPi.GPIO as GPIO
+from subprocess import call
+import time
+
+Pin = 5
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(Pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+def buttonStateChanged(pin):
+    time.sleep(0.5);
+    if not (GPIO.input(pin)):
+        call(['systemctl', 'start', 'btconsole.service'], shell=False)
+    else:
+        call(['systemctl', 'stop', 'btconsole.service'], shell=False)
+
+# subscribe to button presses
+GPIO.add_event_detect(Pin, GPIO.BOTH, callback=buttonStateChanged)
+
+while True:
+    # sleep to reduce unnecessary CPU usage
+    time.sleep(5)

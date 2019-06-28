@@ -1,0 +1,10 @@
+[Unit]
+Description=Bluetooth Serial Console Service
+After=bluetooth.service
+Requires=bluetooth.service
+
+[Service]
+ExecStart=/usr/bin/rfcomm -r watch hci0 1 mgetty -r -s 115200 /dev/rfcomm0
+
+[Install]
+WantedBy=multi-user.target

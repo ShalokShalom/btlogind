@@ -1,0 +1,17 @@
+[Unit]
+Description=Bluetooth Login Daemon
+After=bluetooth.service
+Requires=bluetooth.service
+
+[Service]
+ExecStart=/usr/bin/python btlogind
+WorkingDirectory=/usr/sbin/
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=btlogind
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
